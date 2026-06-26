@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Refrix - Indicadores econômicos, calendário econômico e análises do mercado financeiro.">
+  <title>Refrix - Indicadores e Calendário Econômico</title>
+  <style>
+    :root {
+      --bg-dark: #0a1628;
+      --bg-section: #0d1b2a;
+      --card-bg: #142536;
+      --card-border: #1e3a5f;
+      --primary: #4da3ff;
+      --primary-light: #7ec0ff;
+      --text: #e6eef7;
+      --text-muted: #9db3cc;
+      --success: #2ecc71;
+      --danger: #e74c3c;
+      --warning: #f1c40f;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #08101f 0%, #0d1b2a 100%);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    .tagline {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      padding: 3rem 0;
+    }
+
+    section:nth-child(even) {
+      background-color: var(--bg-section);
+    }
+
+    section:nth-child(odd) {
+      background-color: var(--bg-dark);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* Sobre */
+    .sobre-texto {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 1.05rem;
+    }
+
+    /* Indicadores */
+    .indicadores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .indicador-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .indicador-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+
+    .indicador-card h3 {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .indicador-card .valor {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .indicador-card .variacao {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .positivo {
+      color: var(--success);
+    }
+
+    .negativo {
+      color: var(--danger);
+    }
+
+    .neutro {
+      color: var(--warning);
+    }
+
+    /* Calendário Econômico */
+    .calendario-intro {
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      text-align: center;
+    }
+
+    iframe {
+      display: block;
+      margin: 0 auto;
+      border: 0;
+      max-width: 100%;
+      height: 467px;
+    }
+
+    .iframe-credit {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+    }
+
+    .iframe-credit a {
+      color: var(--primary-light);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #070f1a;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      border-top: 1px solid var(--card-border);
+      font-size: 0.9rem;
+    }
+
+    footer strong {
+      color: var(--text);
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      section {
+        padding: 2rem 0;
+      }
+
+      .indicador-card {
+        padding: 1.25rem;
+      }
+
+      iframe {
+        height: 420px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 0.75rem;
+      }
+
+      .logo {
+        font-size: 1.35rem;
+      }
+
+      .tagline {
+        font-size: 0.8rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      .indicador-card .valor {
+        font-size: 1.5rem;
+      }
+
+      iframe {
+        height: 380px;
+      }
+
+      .iframe-wrapper {
+        padding: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Ref<span>rix</span></div>
+    <p class="tagline">Indicadores econômicos e calendário financeiro em tempo real</p>
+  </header>
+
+  <main>
+
+    <!-- Sobre a Refrix -->
+    <section id="sobre">
+      <div class="container">
+        <h2>Sobre a Refrix</h2>
+        <p class="sobre-texto">
+          A Refrix é uma plataforma dedicada ao acompanhamento de indicadores econômicos e eventos financeiros globais.
+          Nosso objetivo é oferecer dados claros, atualizados e organizados para investidores, analistas e entusiastas do mercado.
+          Com um painel completo de indicadores e um calendário econômico integrado, você monitora o que importa em um só lugar.
+        </p>
+      </div>
+    </section>
+
+    <!-- Indicadores Econômicos -->
+    <section id="indicadores">
+      <div class="container">
+        <h2>Indicadores Econômicos</h2>
+        <div class="indicadores-grid">
+          <div class="indicador-card">
+            <h3>IPCA</h3>
+            <div class="valor">4,55%</div>
+            <div class="variacao positivo">+0,12% no mês</div>
+          </div>
+          <div class="indicador-card">
+            <h3>Selic</h3>
+            <div class="valor">10,50%</div>
+            <div class="variacao negativo">-0,25% na reunião</div>
+          </div>
+          <div class="indicador-card">
+            <h3>CDI</h3>
+            <div class="valor">10,40%</div>
+            <div class="variacao neutro">Estável</div>
+          </div>
+          <div class="indicador-card">
+            <h3>Dólar</h3>
+            <div class="valor">R$ 5,02</div>
+            <div class="variacao negativo">-0,38% hoje</div>
+          </div>
+          <div class="indicador-card">
+            <h3>Ibovespa</h3>
+            <div class="valor">127.450 pts</div>
+            <div class="variacao positivo">+1,15% hoje</div>
+          </div>
+          <div class="indicador-card">
+            <h3>PIB</h3>
+            <div class="valor">2,9%</div>
+            <div class="variacao positivo">+0,3% no trimestre</div>
+          </div>
+          <div class="indicador-card">
+            <h3>Desemprego</h3>
+            <div class="valor">7,8%</div>
+            <div class="variacao positivo">-0,2% no trimestre</div>
+          </div>
+          <div class="indicador-card">
+            <h3>Reservas Internacionais</h3>
+            <div class="valor">US$ 355 bi</div>
+            <div class="variacao neutro">Estável</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendário Econômico -->
+    <section id="calendario">
+      <div class="container">
+        <h2>Calendário Econômico</h2>
+        <p class="calendario-intro">
+          Acompanhe os principais eventos econômicos e indicadores globais que movimentam os mercados financeiros.
+          Dados fornecidos pelo Investing.com.
+        </p>
+        <div class="iframe-wrapper">
+          <div class="iframe-container">
+            <iframe
+              src="https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&category=_employment,_economicActivity,_inflation,_centralBanks,_confidenceIndex&importance=3&features=datepicker,timezone,timeselector,filters&countries=17,25,32,6,37,26,5,22,39,10,35,7,43,4,36,12,72&calType=week&timeZone=12&lang=12"
+              width="650"
+              height="467"
+              frameborder="0"
+              allowtransparency="true"
+              marginwidth="0"
+              marginheight="0"
+              title="Calendário Econômico Investing.com"
+              loading="lazy">
+            </iframe>
+          </div>
+          <p class="iframe-credit">
+            Dados fornecidos por <a href="https://www.investing.com/" target="_blank" rel="noopener noreferrer">Investing.com</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>Refrix</strong> &copy; 2025. Todos os direitos reservados.</p>
+    <p>Plataforma de indicadores e calendário econômico para o mercado financeiro.</p>
+  </footer>
+
+</body>
+</html>
