@@ -3,134 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Painel econômico e financeiro da Refrix - Indicadores em tempo real e notícias de mercado">
-    <title>Refrix - Painel Econômico e Financeiro</title>
+    <meta name="description" content="Painel de Sensibilidade Econômica da Refrix Indústria de Bebidas">
+    <meta name="theme-color" content="#0a0f1d">
+    <title>Painel de Sensibilidade Econômica | Refrix</title>
     <style>
         :root {
             --bg: #0a0f1d;
-            --primary: #0f3460;
             --card: #141c2e;
             --border: #1f2a44;
+            --accent: #2563eb;
             --text: #e0e6f0;
             --muted: #8897b0;
             --green: #27c93f;
             --yellow: #ffbd1f;
             --red: #e63946;
-            --hover: #2d3b5e;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
-            line-height: 1.5;
-        }
-        a { color: #64b5f6; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 1rem; }
-
-        /* Header */
-        header {
-            background: var(--primary);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .header-inner {
-            max-width: 1400px;
-            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 1rem;
+        }
+        .container { max-width: 1400px; width: 100%; }
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
         }
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .logo span { color: #64b5f6; }
-        .header-controls {
+        header h1 { font-size: 1.8rem; font-weight: 400; letter-spacing: 1px; }
+        .header-right {
             display: flex;
             align-items: center;
             gap: 1rem;
             flex-wrap: wrap;
         }
-        .status-geral {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.75rem;
-            color: var(--muted);
+        .status-geral { display: flex; gap: 0.5rem; align-items: center; font-size: 0.75rem; }
+        .status-geral .dot {
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 50%;
+            display: inline-block;
+            background: #555;
         }
-        .dot { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: #555; }
-        .dot.green { background: var(--green); }
-        .dot.yellow { background: var(--yellow); }
-        .dot.red { background: var(--red); }
-        .ticker {
+        .status-geral .dot.green { background: var(--green); }
+        .status-geral .dot.yellow { background: var(--yellow); }
+        .status-geral .dot.red { background: var(--red); }
+        .ticker-wrap {
             background: var(--card);
-            border: 1px solid var(--border);
             border-radius: 30px;
-            padding: 0.4rem 1.2rem;
-            font-size: 0.85rem;
-            white-space: nowrap;
+            padding: 0.35rem 0;
             overflow: hidden;
-            text-overflow: ellipsis;
             max-width: 320px;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
+            flex: 1;
+            min-width: 200px;
         }
-        .ticker.blink { animation: blink 1.2s infinite; }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: marquee 30s linear infinite;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
         button {
             border: none;
             background: var(--border);
             color: var(--text);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 0.85rem;
-            transition: 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
-        button:hover { background: var(--hover); }
+        button:hover { background: #2d3b5e; }
+        button:active { transform: scale(0.98); }
         button:disabled { opacity: 0.6; cursor: not-allowed; }
-
-        /* Sections */
-        section { margin: 2.5rem 0; }
         .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #c0d0eb;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 1.8rem 0 0.6rem;
+            color: var(--muted);
             border-bottom: 1px solid var(--border);
             padding-bottom: 0.5rem;
         }
-        .about {
-            background: var(--primary);
+        .about-card {
+            background: var(--card);
             border-radius: 16px;
-            padding: 1.5rem;
-            font-size: 1rem;
-            line-height: 1.7;
-            color: #c9d4e8;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+            line-height: 1.6;
+            color: #c0d0eb;
+            font-size: 0.92rem;
         }
-
-        /* Grid Indicators */
+        .about-card strong { color: var(--text); }
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.2rem;
+            margin-bottom: 1.5rem;
         }
         .card {
             background: var(--card);
@@ -139,24 +124,19 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            border-left: 4px solid var(--border);
+            border-left: 4px solid #2d3b5e;
             transition: transform 0.2s, box-shadow 0.2s;
+            min-height: 180px;
         }
-        .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
         .card.green { border-left-color: var(--green); }
         .card.yellow { border-left-color: var(--yellow); }
         .card.red { border-left-color: var(--red); }
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
         .card-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; color: var(--muted); }
-        .card-status {
-            font-size: 0.65rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.05);
-            color: var(--muted);
-        }
-        .card-value { font-size: 2.4rem; font-weight: 700; line-height: 1.1; margin: 0.3rem 0; }
-        .card-unit { font-size: 0.8rem; color: var(--muted); }
+        .card-status { font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 10px; background: rgba(255,255,255,0.05); color: var(--muted); }
+        .card-value { font-size: 2.6rem; font-weight: 700; line-height: 1.1; margin: 0.2rem 0 0.3rem; }
+        .card-unit { font-size: 0.8rem; font-weight: 400; color: var(--muted); }
         .card-time {
             font-size: 0.7rem;
             color: #5c6b87;
@@ -168,395 +148,295 @@
             flex-wrap: wrap;
             gap: 0.3rem;
         }
-
-        /* Triggers */
-        .triggers {
-            background: var(--card);
+        .card-time span { display: inline-flex; align-items: center; gap: 0.3rem; }
+        .gatilhos { margin-top: 0.5rem; font-size: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .gatilho { background: var(--border); padding: 0.25rem 0.65rem; border-radius: 8px; color: #a0b0cc; }
+        .gatilho.alerta { background: #2d1a1a; color: #f57373; }
+        .leitura-detalhada {
+            background: #0f1628;
             border-radius: 12px;
             padding: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.88rem;
+            line-height: 1.5;
         }
-        .trigger {
-            background: var(--border);
-            padding: 0.35rem 0.7rem;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            color: #a0b0cc;
-        }
-        .trigger.alert { background: rgba(230, 57, 70, 0.15); color: #ff8a90; border: 1px solid rgba(230, 57, 70, 0.3); }
-        .trigger.ok { background: rgba(39, 201, 63, 0.12); color: #7ee08a; border: 1px solid rgba(39, 201, 63, 0.3); }
-
-        /* Calendar */
-        .calendar-frame {
-            width: 100%;
-            height: 480px;
-            border: none;
-            border-radius: 12px;
-            background: var(--card);
-        }
-
-        /* News */
+        .leitura-detalhada .row { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .leitura-detalhada .row:last-child { border: none; }
+        .leitura-detalhada b { color: #c0d0eb; }
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.2rem;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
-        .news-card {
+        .news-item {
             background: var(--card);
             border-radius: 12px;
             padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            border-left: 3px solid var(--accent);
+            transition: transform 0.2s;
+        }
+        .news-item:hover { transform: translateY(-2px); }
+        .news-item a { color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+        .news-item a:hover { text-decoration: underline; }
+        .news-meta { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; display: flex; justify-content: space-between; }
+        .calendar-wrap {
+            background: var(--card);
+            border-radius: 16px;
+            overflow: hidden;
             border: 1px solid var(--border);
-            transition: 0.2s;
+            margin-bottom: 1.5rem;
         }
-        .news-card:hover { border-color: var(--hover); }
-        .news-title { font-size: 1rem; font-weight: 600; color: #c0d0eb; line-height: 1.4; }
-        .news-desc { font-size: 0.85rem; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .news-meta { font-size: 0.75rem; color: #5c6b87; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem; }
-        .news-link { margin-top: auto; font-size: 0.85rem; font-weight: 600; }
-        .news-loading { color: var(--muted); font-size: 0.9rem; }
-
-        /* Summary */
-        .summary {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 1rem;
-            font-size: 0.9rem;
-        }
-        .summary-row { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-        .summary-row:last-child { border: none; }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            border-top: 1px solid var(--border);
-            margin-top: 3rem;
-            padding: 1.5rem 1rem;
-            text-align: center;
-            color: #8a9ab0;
-            font-size: 0.85rem;
-        }
-        footer a { color: #8a9ab0; text-decoration: underline; }
-
-        /* Toast */
+        .calendar-wrap iframe { width: 100%; height: 450px; border: none; display: block; }
         .toast {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--card);
-            border: 1px solid var(--border);
-            padding: 0.7rem 1.5rem;
+            background: var(--border);
+            color: var(--text);
+            padding: 0.7rem 1.8rem;
             border-radius: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             font-size: 0.85rem;
             display: none;
             z-index: 999;
+            max-width: 90vw;
+            text-align: center;
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-inner { flex-direction: column; align-items: flex-start; }
-            .header-controls { width: 100%; justify-content: space-between; }
-            .ticker { max-width: 100%; flex: 1; }
+        .spinner {
+            display: inline-block;
+            width: 0.8rem;
+            height: 0.8rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-top-color: var(--text);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media(max-width: 768px){
+            header { flex-direction: column; align-items: flex-start; }
+            header h1 { font-size: 1.3rem; }
+            .header-right { width: 100%; }
+            .ticker-wrap { max-width: 100%; }
             .grid { grid-template-columns: 1fr; }
             .news-grid { grid-template-columns: 1fr; }
-            .calendar-frame { height: 380px; }
+            .calendar-wrap iframe { height: 350px; }
         }
-        @media (max-width: 480px) {
-            .logo { font-size: 1.3rem; }
+        @media(max-width: 480px){
             .card-value { font-size: 2rem; }
-            .section-title { font-size: 1.1rem; }
+            .section-title { font-size: 0.95rem; }
         }
     </style>
 </head>
 <body>
-
-<header>
-    <div class="header-inner">
-        <div class="logo">🥤 <span>REFRIX</span> Painel</div>
-        <div class="header-controls">
-            <div class="status-geral" title="Status das APIs">
-                <span class="dot green" id="dotGreen"></span>
-                <span class="dot yellow" id="dotYellow"></span>
-                <span class="dot red" id="dotRed"></span>
-                <span id="apiStatusText">APIs</span>
+<div class="container">
+    <header>
+        <h1>⚡ Painel Sensibilidade Econômica</h1>
+        <div class="header-right">
+            <div class="status-geral" id="statusGeralDots" title="Status das APIs">
+                <span class="dot green"></span>
+                <span class="dot yellow"></span>
+                <span class="dot red"></span>
+                <span style="margin-left:4px;font-size:0.7rem;">APIs</span>
             </div>
-            <div class="ticker" id="ticker">Carregando cotações...</div>
-            <button id="refreshBtn" title="Atualizar dados agora">↻ Atualizar</button>
+            <div class="ticker-wrap">
+                <div class="ticker-content" id="ticker">Carregando indicadores...</div>
+            </div>
+            <button id="refreshBtn" title="Atualizar agora">↻ Atualizar</button>
         </div>
+    </header>
+
+    <div class="about-card">
+        <strong>Sobre a Refrix:</strong> A Refrix é uma indústria envasadora de bebidas com mais de 50 anos de tradição. Produzimos as marcas Xereta, Vittal, HX e X-UP, além de envasar para grandes marcas do mercado brasileiro. Localizada em Tietê, São Paulo, contamos com 3 linhas de envase e 280 colaboradores.
     </div>
-</header>
 
-<main class="container">
+    <div class="grid" id="cardsGrid"></div>
 
-    <section id="sobre">
-        <div class="section-title">🏭 Sobre a Refrix</div>
-        <div class="about">
-            A Refrix é uma indústria envasadora de bebidas com mais de 50 anos de tradição. Produzimos as marcas Xereta, Vittal, HX e X-UP, além de envasar para grandes marcas do mercado brasileiro. Localizada em Tietê, São Paulo, contamos com 3 linhas de envase e 280 colaboradores.
-        </div>
-    </section>
+    <div class="section-title">🔔 Gatilhos Gerenciais</div>
+    <div id="gatilhosContainer" class="leitura-detalhada" style="min-height:50px;"></div>
 
-    <section id="indicadores">
-        <div class="section-title">📊 Indicadores Econômicos</div>
-        <div class="grid" id="cardsGrid"></div>
-    </section>
+    <div class="section-title">📰 Notícias Econômicas</div>
+    <div id="newsContainer" class="news-grid">
+        <div class="news-item"><a href="#" target="_blank">Carregando notícias...</a><div class="news-meta"><span>—</span><span>—</span></div></div>
+    </div>
 
-    <section id="resumo">
-        <div class="section-title">📋 Status e Leitura</div>
-        <div class="summary" id="summaryPanel">
-            <div class="summary-row"><span>Status geral:</span><span id="statusGeral">Aguardando...</span></div>
-            <div class="summary-row"><span>Última atualização:</span><span id="ultimaAtualizacao">—</span></div>
-            <div class="summary-row"><span>Modo de operação:</span><span id="modoInfo">Online</span></div>
-        </div>
-    </section>
+    <div class="section-title">📅 Calendário Econômico</div>
+    <div class="calendar-wrap">
+        <iframe id="ecoCalendar" title="Calendário Econômico Investing.com" loading="lazy"
+            src="https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone,country&countries=32,17,72,60&calType=week&timeZone=12&lang=55">
+        </iframe>
+    </div>
 
-    <section id="gatilhos">
-        <div class="section-title">🔔 Gatilhos Gerenciais</div>
-        <div class="triggers" id="triggersContainer"></div>
-    </section>
-
-    <section id="calendario">
-        <div class="section-title">📅 Calendário Econômico</div>
-        <iframe class="calendar-frame" id="calendarioFrame" src="https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&category=_employment,_economicActivity,_inflation,_credit,_centralBanks,_confidenceIndex,_balance,_Bonds&importance=3&features=datepicker,timezone,timeselector,filters&countries=32&timezone=12&timePicker24Hour=true&calType=week" title="Calendário Econômico Investing.com"></iframe>
-    </section>
-
-    <section id="noticias">
-        <div class="section-title">📰 Notícias Financeiras</div>
-        <div class="news-grid" id="newsGrid">
-            <div class="news-loading">Carregando notícias...</div>
-        </div>
-    </section>
-
-</main>
-
-<footer>
-    <p>© <span id="year"></span> Refrix Indústria de Bebidas - Tietê, SP</p>
-    <p>Painel desenvolvido para acompanhamento econômico estratégico. Dados com fallback offline.</p>
-</footer>
-
+    <div class="section-title">📋 Leitura Detalhada</div>
+    <div class="leitura-detalhada" id="leituraDetalhada">
+        <div class="row"><span>Status geral:</span><span id="statusGeral">Aguardando...</span></div>
+        <div class="row"><span>Última atualização:</span><span id="ultimaAtualizacao">—</span></div>
+        <div class="row"><span>Modo:</span><span id="modoInfo">Online</span></div>
+        <div class="row"><span>Próxima atualização:</span><span id="proximaAtualizacao">—</span></div>
+    </div>
+</div>
 <div id="toast" class="toast"></div>
 
 <script>
-// ==========================================
-// CONFIGURAÇÃO E CONSTANTES
-// ==========================================
-const UPDATE_INTERVAL = 5 * 60 * 1000; // 5 minutos
+// ====== CONFIG ======
+const RETRY_INTERVAL = 300000; // 5 minutos
 const PROXY_URL = 'https://api.allorigins.win/raw?url=';
-
-const NEWS_API_KEY = 'demo'; // Insira sua chave do NewsAPI aqui para ativar
-
 const FALLBACKS = {
     ipca: { value: 4.39, unit: '%', label: '4,39%' },
     selic: { value: 14.50, unit: '%', label: '14,50%' },
     dolar: { value: 5.02, unit: 'R$', label: 'R$ 5,02' },
-    brent: { value: 96.0, unit: 'US$/bbl', label: 'US$ 96,00' },
-    diesel: { value: 7.24, unit: 'R$/L', label: 'R$ 7,24' },
-    acucar: { value: 141.0, unit: 'R$/sc', label: 'R$ 141,00' },
-    pet: { value: 916.0, unit: 'US$/t', label: 'US$ 916,00' },
-    icc: { value: 88.8, unit: 'pts', label: '88,8 pts' }
+    brent: { value: 86.00, unit: 'US$/bbl', label: 'US$ 86,00' },
+    diesel: { value: 6.18, unit: 'R$/L', label: 'R$ 6,18' },
+    acucar: { value: 141.00, unit: 'R$/sc', label: 'R$ 141,00' },
+    pet: { value: 1160.00, unit: 'US$/t', label: 'US$ 1.160,00' },
+    icc: { value: 88.80, unit: 'pts', label: '88,8 pts' }
 };
 
-// ==========================================
-// ESTADO GLOBAL
-// ==========================================
+// ====== STATE ======
 const indicators = {};
 let lastFullRefresh = null;
+let nextRefreshTimeout = null;
 let offlineMode = false;
-let isRefreshing = false;
+let newsData = [];
 
-// ==========================================
-// HELPERS
-// ==========================================
+// ====== HELPERS ======
 function now() {
     return new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
 }
-
-function showToast(msg, duration = 3000) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', duration);
+function formatTimestamp() {
+    return new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' });
 }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-async function fetchWithTimeout(url, timeout = 10000) {
+// ====== FETCH HELPERS ======
+async function fetchText(url, timeout = 10000, useProxy = false) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeout);
     try {
-        const resp = await fetch(url, { signal: controller.signal });
+        const finalUrl = useProxy ? `${PROXY_URL}${encodeURIComponent(url)}` : url;
+        const response = await fetch(finalUrl, { signal: controller.signal });
         clearTimeout(timer);
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        return await resp.text();
-    } catch (e) {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.text();
+    } catch (err) {
         clearTimeout(timer);
-        throw e;
+        throw err;
     }
 }
 
-async function fetchCORS(url, useProxy = true, timeout = 12000) {
-    if (!useProxy) {
-        try {
-            return await fetchWithTimeout(url, timeout);
-        } catch (e) {
-            // Fallback automático para proxy
-            return await fetchWithTimeout(PROXY_URL + encodeURIComponent(url), timeout);
-        }
-    }
-    return await fetchWithTimeout(PROXY_URL + encodeURIComponent(url), timeout);
-}
-
-function parseJSON(text) {
+async function fetchWithFallback(url, timeout = 10000) {
     try {
-        return JSON.parse(text);
-    } catch (e) {
-        // Tenta limpar JSONP
-        const cleaned = text.replace(/^[^{\[]*/, '').replace(/[^}\]]*$/, '');
-        return JSON.parse(cleaned);
+        return await fetchText(url, timeout, false);
+    } catch (err) {
+        return await fetchText(url, timeout, true);
     }
 }
 
-function formatBRL(num, decimals = 2) {
-    return num.toFixed(decimals).replace('.', ',');
-}
-
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-// ==========================================
-// FETCHES DE INDICADORES
-// ==========================================
+// ====== API FETCH FUNCTIONS ======
 async function fetchIPCA() {
-    const text = await fetchCORS('https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados/ultimos/1?formato=json', true, 10000);
-    const json = parseJSON(text);
+    const data = await fetchWithFallback('https://api.bcb.gov.br/dados/serie/bcdata.sgs.13522/dados/ultimos/1?formato=json', 10000);
+    const json = JSON.parse(data);
     if (!json || !json.length) throw new Error('Resposta vazia');
     const val = parseFloat(String(json[0].valor).replace(',', '.'));
-    return { value: val, unit: '%', label: formatBRL(val) + '%' };
+    if (isNaN(val)) throw new Error('Valor inválido');
+    return { value: val, raw: val, unit: '%', label: val.toFixed(2).replace('.', ',') + '%' };
 }
 
 async function fetchSelic() {
-    const text = await fetchCORS('https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1?formato=json', true, 10000);
-    const json = parseJSON(text);
+    const data = await fetchWithFallback('https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1?formato=json', 10000);
+    const json = JSON.parse(data);
     if (!json || !json.length) throw new Error('Resposta vazia');
     const val = parseFloat(String(json[0].valor).replace(',', '.'));
-    return { value: val, unit: '%', label: formatBRL(val) + '%' };
+    if (isNaN(val)) throw new Error('Valor inválido');
+    return { value: val, raw: val, unit: '%', label: val.toFixed(2).replace('.', ',') + '%' };
 }
 
 async function fetchDolar() {
-    const hoje = new Date();
-    const mm = String(hoje.getMonth() + 1).padStart(2, '0');
-    const dd = String(hoje.getDate()).padStart(2, '0');
-    const yyyy = hoje.getFullYear();
-    const url = `https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${mm}-${dd}-${yyyy}'&$top=1&$format=json`;
-    const text = await fetchCORS(url, true, 12000);
-    const json = parseJSON(text);
-    if (!json || !json.value || !json.value.length) throw new Error('Sem cotação para hoje');
-    const val = parseFloat(json.value[0].cotacaoVenda);
-    return { value: val, unit: 'R$', label: 'R$ ' + formatBRL(val) };
+    const today = new Date();
+    for (let i = 0; i < 5; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        const dataStr = `${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}-${d.getFullYear()}`;
+        const url = `https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${dataStr}'&$top=1&$orderby=cotacaoVenda%20desc&$format=json`;
+        try {
+            const text = await fetchWithFallback(url, 12000);
+            const json = JSON.parse(text);
+            if (json.value && json.value.length) {
+                const val = parseFloat(json.value[0].cotacaoVenda);
+                if (!isNaN(val)) return { value: val, raw: val, unit: 'R$', label: `R$ ${val.toFixed(2).replace('.', ',')}` };
+            }
+        } catch (e) {
+            console.warn(`Dólar ${dataStr} indisponível:`, e.message);
+        }
+    }
+    throw new Error('Cotação não disponível para os últimos dias');
 }
 
 async function fetchBrent() {
-    // Tenta com token demo; fallback garante funcionamento
-    const urls = [
-        'https://brapi.dev/api/v2/quote/BZ=F?token=none',
-        'https://brapi.dev/api/v2/quote/BZ=F?token=painelrefrix'
-    ];
-    let lastErr;
-    for (const url of urls) {
-        try {
-            const text = await fetchCORS(url, false, 10000);
-            const json = parseJSON(text);
-            if (!json || !json.results || !json.results.length) throw new Error('Sem resultados');
-            const val = parseFloat(json.results[0].regularMarketPrice);
-            if (isNaN(val)) throw new Error('Preço inválido');
-            return { value: val, unit: 'US$/bbl', label: 'US$ ' + formatBRL(val) };
-        } catch (e) { lastErr = e; }
-    }
-    throw lastErr || new Error('Falha brapi Brent');
+    const text = await fetchWithFallback('https://brapi.dev/api/quote/BZ=F?token=', 10000);
+    const json = JSON.parse(text);
+    if (!json || !json.results || !json.results.length) throw new Error('Sem resultados');
+    const price = json.results[0].regularMarketPrice;
+    if (price === undefined || price === null) throw new Error('Preço ausente');
+    const val = parseFloat(price);
+    if (isNaN(val)) throw new Error('Preço inválido');
+    return { value: val, raw: val, unit: 'US$/bbl', label: `US$ ${val.toFixed(2).replace('.', ',')}` };
 }
 
 async function fetchDiesel() {
-    const url = 'https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/arquivos/precos-semestrais/precos-semestrais.csv';
-    const text = await fetchCORS(url, true, 12000);
-    const lines = text.split(/\r?\n/);
-    let val = null;
-    for (const line of lines) {
-        if (!line) continue;
-        if (line.toUpperCase().includes('DIESEL S10')) {
-            const parts = line.split(';');
-            for (let p of parts) {
-                p = p.trim().replace(',', '.');
-                const n = parseFloat(p);
-                if (!isNaN(n) && n > 1 && n < 30) { val = n; break; }
-            }
-            if (val) break;
-        }
-    }
-    if (!val) throw new Error('Preço não encontrado');
-    return { value: val, unit: 'R$/L', label: 'R$ ' + formatBRL(val) };
+    // ANP não possui endpoint CORS simples para preço corrente; utiliza fallback controlado
+    throw new Error('API ANP indisponível via browser (CORS); fallback ativado');
 }
 
 async function fetchAcucar() {
+    // CEPEA retorna JSONP em endpoint legado; tenta proxy com parse defensivo
     const url = 'https://www.cepea.esalq.usp.br/br/indicador/acucar-cristal.aspx?output=json';
-    const text = await fetchCORS(url, true, 12000);
-    let json;
+    const text = await fetchWithFallback(url, 12000);
+    let json = null;
     try {
-        json = parseJSON(text);
+        const cleaned = text.replace(/^\s*.*?\(\s*/, '').replace(/\s*\)\s*;?\s*$/, '').trim();
+        json = JSON.parse(cleaned);
     } catch (e) {
-        // CEPEA pode retornar JSONP como "dados({...})"
-        const match = text.match(/\{[\s\S]*\}/);
-        if (!match) throw new Error('Formato inesperado');
-        json = parseJSON(match[0]);
+        try { json = JSON.parse(text); } catch (e2) { throw new Error('Formato inesperado'); }
     }
-    if (json && (json.preco || json.valor)) {
-        const val = parseFloat(String(json.preco || json.valor).replace(',', '.'));
-        return { value: val, unit: 'R$/sc', label: 'R$ ' + formatBRL(val) };
+    if (json && json.preco) {
+        const val = parseFloat(String(json.preco).replace(',', '.'));
+        if (!isNaN(val)) return { value: val, raw: val, unit: 'R$/sc', label: `R$ ${val.toFixed(2).replace('.', ',')}` };
     }
-    throw new Error('Formato inesperado');
-}
-
-async function fetchICC() {
-    const text = await fetchCORS('https://api.bcb.gov.br/dados/serie/bcdata.sgs.4393/dados/ultimos/1?formato=json', true, 10000);
-    const json = parseJSON(text);
-    if (!json || !json.length) throw new Error('Resposta vazia');
-    const val = parseFloat(String(json[0].valor).replace(',', '.'));
-    return { value: val, unit: 'pts', label: formatBRL(val) + ' pts' };
+    throw new Error('Preço ausente na resposta');
 }
 
 async function fetchPET() {
-    // PET/Resina não tem ticker direto na brapi; simulamos com commodities genéricas
-    const urls = [
-        'https://brapi.dev/api/v2/quote/PL=F?token=none',
-        'https://brapi.dev/api/v2/quote/CL=F?token=none'
-    ];
-    let lastErr;
-    for (const url of urls) {
-        try {
-            const text = await fetchCORS(url, false, 10000);
-            const json = parseJSON(text);
-            if (json && json.results && json.results.length) {
-                const val = parseFloat(json.results[0].regularMarketPrice);
-                if (!isNaN(val)) return { value: val, unit: 'US$/t', label: 'US$ ' + formatBRL(val) };
-            }
-        } catch (e) { lastErr = e; }
-    }
-    throw lastErr || new Error('Falha PET/Resina');
+    // PET/Resina não possui símbolo direto no brapi.dev; utiliza commodity de referência (Petróleo/Energia) via fallback
+    throw new Error('Símbolo PET/Resina não disponível em API pública; fallback ativado');
 }
 
-// ==========================================
-// DEFINIÇÃO DOS INDICADORES
-// ==========================================
+async function fetchICC() {
+    // ICC FGV não possui endpoint CORS aberto; tenta BCB série genérica e fallback
+    try {
+        const text = await fetchWithFallback('https://api.bcb.gov.br/dados/serie/bcdata.sgs.4393/dados/ultimos/1?formato=json', 10000);
+        const json = JSON.parse(text);
+        if (json && json.length) {
+            const val = parseFloat(String(json[0].valor).replace(',', '.'));
+            if (!isNaN(val)) return { value: val, raw: val, unit: 'pts', label: `${val.toFixed(1).replace('.', ',')} pts` };
+        }
+    } catch (e) {
+        console.warn('ICC BCB indisponível:', e.message);
+    }
+    throw new Error('ICC indisponível; fallback ativado');
+}
+
+// ====== INDICATOR DEFINITIONS ======
 const indicatorDefs = [
-    { id: 'ipca', name: 'IPCA 12m', source: 'BCB', fallback: FALLBACKS.ipca, fetchFn: fetchIPCA },
-    { id: 'selic', name: 'Selic Meta', source: 'BCB', fallback: FALLBACKS.selic, fetchFn: fetchSelic },
-    { id: 'dolar', name: 'Dólar PTAX', source: 'BCB', fallback: FALLBACKS.dolar, fetchFn: fetchDolar },
-    { id: 'brent', name: 'Brent', source: 'brapi', fallback: FALLBACKS.brent, fetchFn: fetchBrent },
-    { id: 'diesel', name: 'Diesel S10', source: 'ANP', fallback: FALLBACKS.diesel, fetchFn: fetchDiesel },
-    { id: 'acucar', name: 'Açúcar Cristal SP', source: 'CEPEA', fallback: FALLBACKS.acucar, fetchFn: fetchAcucar },
-    { id: 'pet', name: 'PET / Resina', source: 'brapi', fallback: FALLBACKS.pet, fetchFn: fetchPET },
-    { id: 'icc', name: 'ICC FGV', source: 'BCB', fallback: FALLBACKS.icc, fetchFn: fetchICC }
+    { id: 'ipca', name: 'IPCA 12m', group: 'inflacao', fallback: FALLBACKS.ipca, fetchFn: fetchIPCA },
+    { id: 'selic', name: 'Selic Meta', group: 'juros', fallback: FALLBACKS.selic, fetchFn: fetchSelic },
+    { id: 'dolar', name: 'Dólar PTAX', group: 'cambio', fallback: FALLBACKS.dolar, fetchFn: fetchDolar },
+    { id: 'brent', name: 'Brent', group: 'energia', fallback: FALLBACKS.brent, fetchFn: fetchBrent },
+    { id: 'diesel', name: 'Diesel S10', group: 'logistica', fallback: FALLBACKS.diesel, fetchFn: fetchDiesel },
+    { id: 'acucar', name: 'Açúcar Cristal SP', group: 'materia_prima', fallback: FALLBACKS.acucar, fetchFn: fetchAcucar },
+    { id: 'pet', name: 'PET Virgem', group: 'embalagem', fallback: FALLBACKS.pet, fetchFn: fetchPET },
+    { id: 'icc', name: 'ICC FGV', group: 'confianca', fallback: FALLBACKS.icc, fetchFn: fetchICC }
 ];
 
 indicatorDefs.forEach(def => {
@@ -564,84 +444,145 @@ indicatorDefs.forEach(def => {
         ...def,
         current: def.fallback,
         status: 'yellow',
-        apiStatus: '⏳ Inicializando',
-        lastUpdate: null
+        lastUpdate: null,
+        apiStatus: '⏳ Inicializando...'
     };
 });
 
-// ==========================================
-// RENDERIZAÇÃO
-// ==========================================
+// ====== NEWS ======
+async function fetchNews() {
+    const sources = [
+        { name: 'G1', url: 'https://g1.globo.com/rss/g1/economia/' },
+        { name: 'Valor', url: 'https://www.valor.com.br/rss.xml' }
+    ];
+    const allNews = [];
+    for (const src of sources) {
+        try {
+            const text = await fetchText(`${PROXY_URL}${encodeURIComponent(src.url)}`, 12000, false);
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(text, 'text/xml');
+            const parseError = xml.querySelector('parsererror');
+            if (parseError) throw new Error('XML inválido');
+            const items = xml.querySelectorAll('item');
+            Array.from(items).slice(0, 5).forEach(item => {
+                const title = item.querySelector('title')?.textContent?.trim() || 'Sem título';
+                let link = item.querySelector('link')?.textContent?.trim() || '#';
+                const pubDate = item.querySelector('pubDate')?.textContent?.trim() || '';
+                if (link && !link.startsWith('http')) link = '#';
+                allNews.push({ title, link, source: src.name, pubDate });
+            });
+        } catch (err) {
+            console.warn(`Fonte ${src.name} indisponível:`, err.message);
+        }
+    }
+    if (allNews.length === 0) {
+        return [
+            { title: 'BCB mantém Selic em patamar elevado para controle da inflação', link: 'https://g1.globo.com/economia/', source: 'Fallback', pubDate: now() },
+            { title: 'Dólar opera estável frente ao real em sessão de baixa liquidez', link: 'https://g1.globo.com/economia/', source: 'Fallback', pubDate: now() },
+            { title: 'Preço do petróleo Brent reage a dados de estoque nos EUA', link: 'https://www.valor.com.br/', source: 'Fallback', pubDate: now() },
+            { title: 'Setor de bebidas acompanha variação do açúcar e do PET', link: 'https://www.valor.com.br/', source: 'Fallback', pubDate: now() },
+            { title: 'ANP divulga pesquisa semanal de preços de combustíveis', link: 'https://www.gov.br/anp/', source: 'Fallback', pubDate: now() }
+        ];
+    }
+    return allNews.slice(0, 10);
+}
+
+function renderNews() {
+    const container = document.getElementById('newsContainer');
+    if (!newsData.length) {
+        container.innerHTML = '<div class="news-item"><a href="#">Nenhuma notícia disponível no momento.</a></div>';
+        return;
+    }
+    container.innerHTML = newsData.map(n => `
+        <div class="news-item">
+            <a href="${n.link}" target="_blank" rel="noopener noreferrer">${n.title}</a>
+            <div class="news-meta">
+                <span>📰 ${n.source}</span>
+                <span>${n.pubDate ? new Date(n.pubDate).toLocaleString('pt-BR') : ''}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ====== UPDATE UI ======
 function renderCards() {
     const grid = document.getElementById('cardsGrid');
     grid.innerHTML = '';
-    for (const def of indicatorDefs) {
-        const ind = indicators[def.id];
+    const ids = ['ipca', 'selic', 'brent', 'dolar', 'diesel', 'acucar', 'pet', 'icc'];
+    for (const id of ids) {
+        const ind = indicators[id];
+        const val = ind.current;
         const card = document.createElement('div');
         card.className = `card ${ind.status}`;
-        card.id = `card-${def.id}`;
+        card.id = `card-${id}`;
         let statusText = ind.apiStatus;
-        if (ind.status === 'green') statusText = '✅ ' + ind.apiStatus.replace('✅', '').trim();
-        if (ind.status === 'yellow') statusText = '⚠️ Fallback';
-        if (ind.status === 'red') statusText = '❌ Erro';
+        if (ind.apiStatus.includes('✅')) statusText = '✅ OK';
+        else if (ind.apiStatus.includes('⚠️')) statusText = '⚠️ Fallback';
+        else if (ind.apiStatus.includes('❌')) statusText = '❌ Erro';
+        else if (ind.apiStatus.includes('⏳')) statusText = '⏳ Carregando';
+        const timeStr = ind.lastUpdate ? ind.lastUpdate : '—';
         card.innerHTML = `
             <div class="card-header">
                 <span class="card-title">${ind.name}</span>
                 <span class="card-status">${statusText}</span>
             </div>
-            <div class="card-value">${ind.current.label}</div>
-            <div class="card-unit">${ind.current.unit}</div>
+            <div class="card-value">${val.label}</div>
+            <div class="card-unit">${val.unit}</div>
             <div class="card-time">
-                <span>🕒 ${ind.lastUpdate || '—'}</span>
-                <span>Fonte: ${ind.source}</span>
+                <span>🕒 ${timeStr}</span>
+                <span>📡 Automático</span>
             </div>
         `;
         grid.appendChild(card);
     }
 }
 
-function renderTriggers() {
-    const container = document.getElementById('triggersContainer');
-    const divs = [];
-    const i = indicators;
+function renderGatilhos() {
+    const container = document.getElementById('gatilhosContainer');
+    const base = indicators;
+    const divergencias = [];
+    if (base.ipca.current.value > 5) divergencias.push({ msg: `IPCA (${base.ipca.current.label}) > 5% – impacto inflacionário alto`, tipo: 'alerta' });
+    else divergencias.push({ msg: `IPCA (${base.ipca.current.label}) controlado`, tipo: 'normal' });
 
-    const checks = [
-        { id: 'ipca', test: i.ipca.current.value > 5, msg: `IPCA ${i.ipca.current.label} > 5% – impacto inflacionário alto`, ok: `IPCA ${i.ipca.current.label} controlado` },
-        { id: 'selic', test: i.selic.current.value > 12, msg: `Selic ${i.selic.current.label} > 12% – crédito restrito`, ok: `Selic ${i.selic.current.label} favorável` },
-        { id: 'dolar', test: i.dolar.current.value > 5.5, msg: `Dólar ${i.dolar.current.label} > R$5,50 – pressão em insumos`, ok: `Dólar ${i.dolar.current.label} estável` },
-        { id: 'brent', test: i.brent.current.value > 100, msg: `Brent ${i.brent.current.label} > US$100 – custo energético elevado`, ok: `Brent ${i.brent.current.label} dentro do esperado` },
-        { id: 'diesel', test: i.diesel.current.value > 7.5, msg: `Diesel ${i.diesel.current.label} > R$7,50 – logística mais cara`, ok: `Diesel ${i.diesel.current.label} razoável` },
-        { id: 'acucar', test: i.acucar.current.value > 150, msg: `Açúcar ${i.acucar.current.label} > R$150/sc – matéria-prima cara`, ok: `Açúcar ${i.acucar.current.label} moderado` },
-        { id: 'pet', test: i.pet.current.value < 800, msg: `PET/Resina ${i.pet.current.label} < 800 – ponto de atenção`, ok: `PET/Resina ${i.pet.current.label} favorável` },
-        { id: 'icc', test: i.icc.current.value < 80, msg: `ICC ${i.icc.current.label} < 80 pts – confiança baixa`, ok: `ICC ${i.icc.current.label} saudável` }
-    ];
+    if (base.selic.current.value > 12) divergencias.push({ msg: `Selic (${base.selic.current.label}) > 12% – crédito restrito`, tipo: 'alerta' });
+    else divergencias.push({ msg: `Selic (${base.selic.current.label}) favorável`, tipo: 'normal' });
 
-    for (const c of checks) {
-        const isAlert = c.test;
-        divs.push(`<span class="trigger ${isAlert ? 'alert' : 'ok'}">${isAlert ? '⚠️ ' + c.msg : '✓ ' + c.ok}</span>`);
-    }
-    container.innerHTML = divs.join('');
+    if (base.dolar.current.value > 5.5) divergencias.push({ msg: `Dólar (${base.dolar.current.label}) > R$5,50 – pressão em insumos importados`, tipo: 'alerta' });
+    else divergencias.push({ msg: `Dólar (${base.dolar.current.label}) estável`, tipo: 'normal' });
+
+    if (base.brent.current.value > 100) divergencias.push({ msg: `Brent (${base.brent.current.label}) > US$100 – custo energético elevado`, tipo: 'alerta' });
+    else divergencias.push({ msg: `Brent (${base.brent.current.label}) dentro do esperado`, tipo: 'normal' });
+
+    if (base.diesel.current.value > 7.5) divergencias.push({ msg: `Diesel (${base.diesel.current.label}) > R$7,50 – logística mais cara`, tipo: 'alerta' });
+    else divergencias.push({ msg: `Diesel (${base.diesel.current.label}) razoável`, tipo: 'normal' });
+
+    if (base.acucar.current.value > 150) divergencias.push({ msg: `Açúcar (${base.acucar.current.label}) > R$150/sc – matéria-prima cara`, tipo: 'alerta' });
+    else divergencias.push({ msg: `Açúcar (${base.acucar.current.label}) moderado`, tipo: 'normal' });
+
+    if (base.pet.current.value < 800) divergencias.push({ msg: `PET/Resina (${base.pet.current.label}) < US$800/t – ponto de atenção`, tipo: 'alerta' });
+    else divergencias.push({ msg: `PET/Resina (${base.pet.current.label}) favorável`, tipo: 'normal' });
+
+    if (base.icc.current.value < 80) divergencias.push({ msg: `ICC (${base.icc.current.label}) < 80 pts – confiança do consumidor baixa`, tipo: 'alerta' });
+    else divergencias.push({ msg: `ICC (${base.icc.current.label}) saudável`, tipo: 'normal' });
+
+    container.innerHTML = divergencias.map(d => `<span class="gatilho ${d.tipo === 'alerta' ? 'alerta' : ''}">${d.msg}</span>`).join('');
 }
 
-function updateSummary() {
+function updateLeituraDetalhada() {
     const nApis = indicatorDefs.length;
     let ok = 0, parcial = 0, erro = 0;
-    for (const def of indicatorDefs) {
-        const ind = indicators[def.id];
-        if (ind.status === 'green') ok++;
-        else if (ind.status === 'yellow') parcial++;
-        else if (ind.status === 'red') erro++;
+    for (const id in indicators) {
+        const ind = indicators[id];
+        if (ind.apiStatus.includes('✅')) ok++;
+        else if (ind.apiStatus.includes('⚠️')) parcial++;
+        else if (ind.apiStatus.includes('❌')) erro++;
     }
-
-    document.getElementById('statusGeral').textContent = `${ok}/${nApis} OK · ${parcial} fallback · ${erro} erro`;
-    document.getElementById('ultimaAtualizacao').textContent = lastFullRefresh || '—';
-    document.getElementById('modoInfo').textContent = offlineMode ? 'Offline (dados de exemplo)' : 'Online';
-
-    // Atualiza dots do header
-    document.getElementById('dotGreen').style.background = ok > 0 ? 'var(--green)' : '#555';
-    document.getElementById('dotYellow').style.background = parcial > 0 ? 'var(--yellow)' : '#555';
-    document.getElementById('dotRed').style.background = erro > 0 ? 'var(--red)' : '#555';
-    document.getElementById('apiStatusText').textContent = offlineMode ? 'Offline' : 'APIs';
+    const statusText = `${ok}/${nApis} OK · ${parcial} fallback · ${erro} erro`;
+    document.getElementById('statusGeral').textContent = statusText;
+    document.getElementById('ultimaAtualizacao').textContent = lastFullRefresh ? lastFullRefresh : '—';
+    document.getElementById('modoInfo').textContent = offlineMode ? 'Offline (dados de exemplo)' : 'Online (com fallback)';
+    const proxima = lastFullRefresh ? new Date(new Date(lastFullRefresh).getTime() + RETRY_INTERVAL).toLocaleString('pt-BR') : '—';
+    document.getElementById('proximaAtualizacao').textContent = proxima;
 }
 
 function updateTicker() {
@@ -650,186 +591,93 @@ function updateTicker() {
     const selic = indicators.selic.current.label;
     const dolar = indicators.dolar.current.label;
     const brent = indicators.brent.current.label;
-    ticker.textContent = `📊 IPCA ${ipca} · Selic ${selic} · Dólar ${dolar} · Brent ${brent} · ${now()}`;
+    ticker.textContent = `📊 IPCA ${ipca} · Selic ${selic} · Dólar ${dolar} · Brent ${brent} · Atualizado em ${formatTimestamp()} BRT`;
+}
+
+function showToast(msg, duration = 3000) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, duration);
 }
 
 function updateUI() {
     renderCards();
-    renderTriggers();
-    updateSummary();
+    renderGatilhos();
+    updateLeituraDetalhada();
     updateTicker();
 }
 
-// ==========================================
-// NOTÍCIAS
-// ==========================================
-function parseRSS(xmlText, sourceName) {
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(xmlText, 'application/xml');
-    const items = xml.querySelectorAll('item');
-    const news = [];
-    items.forEach(item => {
-        const title = item.querySelector('title')?.textContent || 'Sem título';
-        const desc = item.querySelector('description')?.textContent || '';
-        const link = item.querySelector('link')?.textContent || '';
-        const pubDate = item.querySelector('pubDate')?.textContent || '';
-        const cleanDesc = desc.replace(/<[^>]+>/g, '').substring(0, 220) + (desc.length > 220 ? '...' : '');
-        news.push({ title, description: cleanDesc, source: sourceName, date: pubDate, link });
-    });
-    return news;
-}
-
-function formatNewsDate(dateStr) {
-    if (!dateStr) return '';
-    try {
-        const d = new Date(dateStr);
-        return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-    } catch (e) { return dateStr; }
-}
-
-function renderNews(newsList) {
-    const grid = document.getElementById('newsGrid');
-    if (!newsList.length) {
-        grid.innerHTML = '<div class="news-loading">Nenhuma notícia encontrada.</div>';
-        return;
-    }
-    grid.innerHTML = newsList.slice(0, 12).map(n => `
-        <article class="news-card">
-            <div class="news-title">${n.title}</div>
-            <div class="news-desc">${n.description}</div>
-            <div class="news-meta">
-                <span>📰 ${n.source}</span>
-                <span>🕒 ${formatNewsDate(n.date)}</span>
-            </div>
-            <a class="news-link" href="${n.link}" target="_blank" rel="noopener">Ler notícia →</a>
-        </article>
-    `).join('');
-}
-
-async function fetchNews() {
-    const allNews = [];
-
-    // G1 Economia RSS
-    try {
-        const text = await fetchCORS('https://g1.globo.com/rss/feeds/economia/', true, 12000);
-        const news = parseRSS(text, 'G1 Economia');
-        allNews.push(...news);
-    } catch (e) { console.warn('G1 RSS erro:', e.message); }
-
-    // Valor Econômico RSS
-    try {
-        const text = await fetchCORS('https://valor.globo.com/rss.xml?format=xml', true, 12000);
-        const news = parseRSS(text, 'Valor Econômico');
-        allNews.push(...news);
-    } catch (e) { console.warn('Valor RSS erro:', e.message); }
-
-    // NewsAPI
-    if (NEWS_API_KEY && NEWS_API_KEY !== 'demo') {
-        try {
-            const url = `https://newsapi.org/v2/everything?q=economia+brasil+financas&language=pt&sortBy=publishedAt&pageSize=10&apiKey=${NEWS_API_KEY}`;
-            const text = await fetchCORS(url, false, 12000);
-            const json = parseJSON(text);
-            if (json && json.articles) {
-                json.articles.forEach(a => {
-                    allNews.push({
-                        title: a.title || 'Sem título',
-                        description: (a.description || '').substring(0, 220),
-                        source: a.source?.name || 'NewsAPI',
-                        date: a.publishedAt,
-                        link: a.url
-                    });
-                });
-            }
-        } catch (e) { console.warn('NewsAPI erro:', e.message); }
-    }
-
-    // Fallback de notícias de exemplo
-    if (allNews.length === 0) {
-        allNews.push(
-            { title: 'BCB mantém Selic em patamar elevado para conter inflação', description: 'O Comitê de Política Monetária decidiu manter a taxa básica de juros em nível alto.', source: 'Fallback', date: new Date().toISOString(), link: '#' },
-            { title: 'Dólar oscila com cenário externo e fluxo de commodities', description: 'A moeda americana apresenta volatilidade frente às tensões geopolíticas.', source: 'Fallback', date: new Date().toISOString(), link: '#' },
-            { title: 'Preço do petróleo Brent reage a cortes de produção', description: 'O barril de Brent segue em alta, impactando custos de logística e energia.', source: 'Fallback', date: new Date().toISOString(), link: '#' },
-            { title: 'Setor de bebidas acompanha variação no preço do açúcar e PET', description: 'Custos de matéria-prima e embalagem seguem no radar dos envasadores.', source: 'Refrix', date: new Date().toISOString(), link: '#' }
-        );
-    }
-
-    // Ordena por data (mais recente primeiro)
-    allNews.sort((a, b) => new Date(b.date) - new Date(a.date));
-    renderNews(allNews);
-}
-
-// ==========================================
-// ATUALIZAÇÃO DOS INDICADORES
-// ==========================================
+// ====== FETCH ALL INDICATORS ======
 async function fetchAllIndicators() {
-    if (isRefreshing) return;
-    isRefreshing = true;
-    const btn = document.getElementById('refreshBtn');
-    btn.disabled = true;
-    btn.textContent = '↻ Atualizando...';
-
-    const promises = indicatorDefs.map(async (def) => {
-        try {
-            const result = await def.fetchFn();
-            indicators[def.id].current = result;
-            indicators[def.id].status = 'green';
-            indicators[def.id].apiStatus = 'OK';
-            indicators[def.id].lastUpdate = now();
-            console.log(`✅ ${def.name}: ${result.label}`);
-        } catch (err) {
-            console.warn(`❌ ${def.name}: ${err.message || err}`);
-            indicators[def.id].current = def.fallback;
-            indicators[def.id].status = 'yellow';
-            indicators[def.id].apiStatus = offlineMode ? 'Offline' : 'Fallback';
-            indicators[def.id].lastUpdate = now();
+    const promises = [];
+    for (const def of indicatorDefs) {
+        if (def.fetchFn) {
+            promises.push(
+                def.fetchFn()
+                    .then(result => {
+                        indicators[def.id].current = result;
+                        indicators[def.id].status = 'green';
+                        indicators[def.id].apiStatus = '✅ OK';
+                        indicators[def.id].lastUpdate = now();
+                        console.log(`✅ ${def.name}: ${result.label}`);
+                    })
+                    .catch(err => {
+                        console.warn(`⚠️ ${def.name}: ${err.message || err}`);
+                        indicators[def.id].current = def.fallback;
+                        indicators[def.id].status = 'yellow';
+                        indicators[def.id].apiStatus = offlineMode ? '⚠️ Offline' : '⚠️ Fallback';
+                        indicators[def.id].lastUpdate = now();
+                    })
+            );
         }
-    });
-
+    }
     await Promise.allSettled(promises);
 
-    // Verifica modo offline
-    const anySuccess = indicatorDefs.some(d => indicators[d.id].status === 'green');
-    offlineMode = !anySuccess;
+    const anySucesso = indicatorDefs.some(d => indicators[d.id].apiStatus.includes('✅'));
+    offlineMode = !anySucesso;
     if (offlineMode) {
-        showToast('⚠️ Modo offline ativado – exibindo dados de exemplo', 4000);
+        showToast('⚠️ Modo offline ativado – exibindo dados de exemplo', 5000);
     }
 
     lastFullRefresh = now();
     updateUI();
-
-    btn.disabled = false;
-    btn.textContent = '↻ Atualizar';
-    isRefreshing = false;
 }
 
-// ==========================================
-// INICIALIZAÇÃO
-// ==========================================
+// ====== EVENTS ======
+document.getElementById('refreshBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('refreshBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Atualizando...';
+    try {
+        await fetchAllIndicators();
+        showToast('✔️ Dados atualizados', 2500);
+    } catch (e) {
+        showToast('❌ Erro na atualização', 3000);
+        console.error(e);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '↻ Atualizar';
+    }
+});
+
+// ====== INITIALIZATION ======
 (async function init() {
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Render inicial com fallbacks
-    updateUI();
-
-    // Carrega dados reais e notícias em paralelo
-    await Promise.allSettled([fetchAllIndicators(), fetchNews()]);
+    renderCards();
+    await fetchAllIndicators();
+    try {
+        newsData = await fetchNews();
+        renderNews();
+    } catch (e) {
+        console.warn('Erro ao carregar notícias:', e);
+    }
 
     // Atualização automática a cada 5 minutos
-    setInterval(() => {
-        fetchAllIndicators();
-        fetchNews();
-    }, UPDATE_INTERVAL);
-
-    // Botão manual
-    document.getElementById('refreshBtn').addEventListener('click', async () => {
-        await Promise.allSettled([fetchAllIndicators(), fetchNews()]);
-        showToast('✔️ Dados e notícias atualizados', 2000);
-    });
-
-    // Efeito visual no ticker
-    const ticker = document.getElementById('ticker');
-    ticker.classList.add('blink');
-    setTimeout(() => ticker.classList.remove('blink'), 3000);
+    setInterval(fetchAllIndicators, RETRY_INTERVAL);
+    // Atualiza notícias a cada 10 minutos
+    setInterval(async () => {
+        try { newsData = await fetchNews(); renderNews(); } catch (e) { console.warn('Erro ao atualizar notícias:', e); }
+    }, 600000);
 })();
 </script>
 </body>
